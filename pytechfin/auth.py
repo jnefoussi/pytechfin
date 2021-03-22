@@ -7,7 +7,7 @@ import types
 import time
 
 
-class ClientAuth:
+class TOTVSRacAuth:
     """
 
     Args:

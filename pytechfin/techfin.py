@@ -5,7 +5,7 @@ import os.path
 from . import __version__
 from .exceptions import TechfinApiResponseException, InvalidToken
 from .http import _retry_session
-
+from .auth import TOTVSRacAuth
 
 class Techfin:
     """
@@ -65,7 +65,7 @@ class Techfin:
             client_id = os.getenv('TECHFINCLIENTID')
             client_secret = os.getenv('TECHFINCLIENTSECRET')
 
-            auth = ClientAuth(client_id=client_id, client_secret=client_secret)
+            auth = TOTVSRacAuth(client_id=client_id, client_secret=client_secret)
 
         self.port = port
         self.host = host or 'totvs.app'

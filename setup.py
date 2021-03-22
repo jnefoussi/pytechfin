@@ -9,7 +9,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 
 min_requires = [
-    pycarol
+    "pycarol" 
 ]
 
 extras_require = {

@@ -75,7 +75,7 @@ class Techfin:
 
     def call_api(self, path, techfin_app, method=None, data=None, auth=True, params=None, content_type='application/json', retries=8,
                  session=None, backoff_factor=0.5, status_forcelist=(502, 503, 504, 524), downloadable=False,
-                 method_whitelist=frozenset(['HEAD', 'TRACE', 'GET', 'PUT', 'OPTIONS', 'DELETE', 'POST']), errors='raise',
+                 allowed_methods=frozenset(['HEAD', 'TRACE', 'GET', 'PUT', 'OPTIONS', 'DELETE', 'POST']), errors='raise',
                  extra_headers=None, files=None,
                  **kwds):
         """
@@ -105,11 +105,11 @@ class Techfin:
                         {backoff factor} * (2 ^ ({retries} - 1)) seconds
             status_forcelist: `iterable` , default (500, 502, 503, 504, 524).
                 A set of integer HTTP status codes that we should force a retry on.
-                A retry is initiated if the request method is in method_whitelist and the response status code is in
+                A retry is initiated if the request method is in allowed_methods and the response status code is in
                 status_forcelist.
             downloadable: `bool` default `False`.
                 If the request will return a file to download.
-            method_whitelist: `iterable` , default frozenset(['HEAD', 'TRACE', 'GET', 'PUT', 'OPTIONS', 'DELETE']))
+            allowed_methods: `iterable` , default frozenset(['HEAD', 'TRACE', 'GET', 'PUT', 'OPTIONS', 'DELETE']))
                 Set of uppercased HTTP method verbs that we should retry on.
             errors: {‘ignore’, ‘raise’}, default ‘raise’
                 If ‘raise’, then invalid request will raise an exception If ‘ignore’,
@@ -162,7 +162,7 @@ class Techfin:
         while True:
             if session is None:
                 session = _retry_session(retries=retries, session=session, backoff_factor=backoff_factor,
-                                              status_forcelist=status_forcelist, method_whitelist=method_whitelist)
+                                              status_forcelist=status_forcelist, allowed_methods=allowed_methods)
 
             response = session.request(method=method, url=url, data=data, json=data_json,
                                        headers=headers, params=params, files=files, **kwds)

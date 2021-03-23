@@ -34,7 +34,7 @@ def _retry_session(retries=5, session=None, backoff_factor=0.5, status_forcelist
             connect=retries,
             backoff_factor=backoff_factor,
             status_forcelist=status_forcelist,
-            allowed_methods=allowed_methods,
+            method_whitelist=allowed_methods,
         )
         adapter = HTTPAdapter(max_retries=retry)
         session.mount('http://', adapter)

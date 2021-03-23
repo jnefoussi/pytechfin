@@ -16,6 +16,7 @@ eggs/
 .eggs/
 lib/
 lib64/
+lib64
 parts/
 sdist/
 var/
@@ -26,6 +27,8 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+bin
+cd
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -83,6 +86,7 @@ ipython_config.py
 
 # pyenv
 .python-version
+pyvenv.cfg
 
 # pipenv
 #   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
@@ -129,9 +133,4 @@ dmypy.json
 .pyre/
 
 # Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-*.code-workspace
+.vscode/

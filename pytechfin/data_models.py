@@ -44,3 +44,20 @@ class TechfinDataModel:
             total_data = [d.replace('-', '') for d in total_data]
 
         return total_data
+
+    def get_table_record_count(self, techfin_tenant=None, carol_tenant=None):
+        """Get number of records per table in techfin
+
+        Args:
+            techfin_tenant (str, optional): techfin tenant id. Defaults to None.
+            carol_tenant (str, optional): carol tenant name. Defaults to Nonte.
+
+        Returns:
+            list of dict: counts per data model.
+        """
+
+        techfin_tenant_id =  get_tenant_id(techfin_tenant=techfin_tenant, carol_tenant=carol_tenant)
+
+        r = self.techfin.call_api(path=f'provisioner/api/v1/carol-sync-monitoring/{techfin_tenant_id}/table-record-count',
+                                   method='GET', techfin_app='fmscash')
+        return r

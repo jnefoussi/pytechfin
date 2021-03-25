@@ -59,5 +59,5 @@ class TechfinDataModel:
         techfin_tenant_id =  get_tenant_id(techfin_tenant=techfin_tenant, carol_tenant=carol_tenant)
 
         r = self.techfin.call_api(path=f'provisioner/api/v1/carol-sync-monitoring/{techfin_tenant_id}/table-record-count',
-                                   method='GET', techfin_app='fmscash')
+                                   method='GET', techfin_app='cashflow')
         return r

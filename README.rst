@@ -40,6 +40,8 @@ the environment variables
 
     TECHFINCLIENTID=123
     TECHFINCLIENTSECRET=1234
+    CAROLUSER=mycaroluser@mail.com
+    CAROLUSER=My@Pwd
 
 and then
 

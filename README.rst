@@ -1,6 +1,11 @@
+.. image:: ./logos/pytechfin_logo.png
+
+
 =======
 pytechfin
 =======
+
+
 
 
 Initializing 
@@ -26,6 +31,8 @@ the environment variables
 
  1. ``TECHFINCLIENTID`` for the client ID
  2. ``TECHFINCLIENTSECRET`` for the client secret
+ 3. ``CAROLUSER`` Carol User with tenant access
+ 4. ``CAROLPWD`` Carol User Password
  
  e.g., one can create a ``.env`` file like this:
 

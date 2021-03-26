@@ -63,9 +63,9 @@ def get_tenant_name(techfin_tenant):
         str: carol tenant name
     """
     if techfin_tenant is None:
-        techfin_tenant = techfin_tenant.strip()
         raise ValueError('Either `carol_tenant` or `techfin_tenant` must be set.')
     
+    techfin_tenant = techfin_tenant.strip()
     if(is_guid(techfin_tenant)):
         return f"tenant{techfin_tenant.replace('-','')}"
     else: 

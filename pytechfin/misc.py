@@ -47,8 +47,9 @@ def is_guid(techfin_tenant):
         bool: true if is valid guid value
     """
     c = re.compile('[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}', re.I)
-    res = c.match(techfin_tenant.strip())
-    print(res)
+    res = c.match(techfin_tenant)
+    return res
+     
 
 def get_tenant_name(techfin_tenant):
     """Returns carol tenant name.
@@ -61,6 +62,7 @@ def get_tenant_name(techfin_tenant):
     Returns:
         str: carol tenant name
     """
+    techfin_tenant = techfin_tenant.strip()
     if techfin_tenant is None:
         raise ValueError('Either `carol_tenant` or `techfin_tenant` must be set.')
     
@@ -68,4 +70,3 @@ def get_tenant_name(techfin_tenant):
         return f"tenant{techfin_tenant.replace('-','')}"
     else: 
         raise ValueError(' `techfin_tenant` must be a valid guid value')
- 

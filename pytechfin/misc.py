@@ -1,3 +1,4 @@
+import re
 
 def get_guid(tenant):
     """Generate UUID from carol's tenant name
@@ -35,3 +36,36 @@ def get_tenant_id(carol_tenant, techfin_tenant):
         return techfin_tenant
     else:
         return get_guid(carol_tenant)
+
+def is_guid(techfin_tenant):
+    """Validate guid arg
+
+    Args:
+        tenant (str): techfin tenant id
+
+    Returns:
+        bool: true if is valid guid value
+    """
+    c = re.compile('[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}', re.I)
+    res = c.match(techfin_tenant.strip())
+    print(res)
+
+def get_tenant_name(techfin_tenant):
+    """Returns carol tenant name.
+
+    Args:
+        techfin_tenant (str): techfin tenant id
+    Raises:
+        ValueError: Raises error if techfin_tenant is not a valid guid value
+
+    Returns:
+        str: carol tenant name
+    """
+    if techfin_tenant is None:
+        raise ValueError('Either `carol_tenant` or `techfin_tenant` must be set.')
+    
+    if(is_guid(techfin_tenant)):
+        return f"tenant{techfin_tenant.replace('-','')}"
+    else: 
+        raise ValueError(' `techfin_tenant` must be a valid guid value')
+ 

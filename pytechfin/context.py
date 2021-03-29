@@ -9,8 +9,8 @@ CAROL_KNOWN_MODULES = {
     'datamodel' : DataModel,
     'staging' : Staging,
     'apps' : Apps,
-    'CDSGolden' : CDSGolden,
-    'CDSStaging' : CDSStaging,
+    'cds_golden' : CDSGolden,
+    'cds_staging' : CDSStaging,
     'connectors': Connectors
 
 }

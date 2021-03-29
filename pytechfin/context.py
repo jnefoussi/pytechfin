@@ -1,15 +1,42 @@
 import os
 from .misc import get_tenant_name
-from pycarol.carol import Carol
+from pycarol import Carol, Staging, DataModel, Apps, CDSGolden, CDSStaging, Connectors
 from pycarol.staging import Staging
 from pycarol.auth.ApiKeyAuth import ApiKeyAuth
 from pycarol.auth.PwdAuth import PwdAuth
 
-class CarolContext():
+CAROL_KNOWN_MODULES = {
+    'datamodel' : DataModel,
+    'staging' : Staging,
+    'apps' : Apps,
+    'CDSGolden' : CDSGolden,
+    'CDSStaging' : CDSStaging,
+    'connectors': Connectors
+
+}
+
+class CarolContext:
+    """Carol context. This class will encapsulate all pycarol's modules needed. 
+
+        Args:
+            use_production_context (bool, optional): Use techfin production envs.. Defaults to False.
+            user (str, optional): Carol's user name. Defaults to None.
+            password (str, optional): Carol's password. Defaults to None.
+            environment (str, optional): Carol's environment name. Defaults to None.
+            organization (str, optional): Carol's organization. Defaults to None.
+            connector_id (str, optional): Carol's connector Id. Defaults to None.
+            connector_name (str, optional): Carol's connector name. Defaults to None.
+            app_name (str, optional): Carol's app name. Defaults to None.
+            carol_tenant (str, optional): Carol's tenant name. Defaults to None.
+            techfin_tenant (str, optional): Techfin tenant Id. Defaults to None.
+
+
+    """
     def __init__(self, use_production_context=False, 
             user=None, password=None, environment=None, organization=None, connector_id=None, connector_name=None, app_name=None,  
             carol_tenant=None, techfin_tenant=None):
-        
+
+
         self._auth = None
 
         if user is None or password is None:
@@ -43,6 +70,7 @@ class CarolContext():
         self._password = password
         self._connector_id = connector_id
         self._context = self._create_context()
+        self._all_modules = set()
         
     @property
     def environment(self):
@@ -88,6 +116,23 @@ class CarolContext():
             print('Login success in Tenant: ' + carol.get_current()['env_name'])
             
             self.carol = carol
-            self.staging  = Staging(carol)
         except Exception as e: 
             print(e)
+            return
+
+        for module_name, module in CAROL_KNOWN_MODULES.items():
+            self.add_module(module_name, module)
+            
+
+
+
+    def add_module(self, module_name, module):
+        """Adds module to context
+
+        Args:
+            module_name (str): attribute to be created
+            module (pyCarol modude): the module will be inicialized with the pycarol.Carol instance.
+        """
+        setattr(self, module_name, module(self.carol))
+        self._all_modules.update([module_name])
+

@@ -69,8 +69,9 @@ class CarolContext:
         self._user = user
         self._password = password
         self._connector_id = connector_id
-        self._context = self._create_context()
         self._all_modules = set()
+        self._context = self._create_context()
+        
         
     @property
     def environment(self):

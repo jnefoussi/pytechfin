@@ -9,4 +9,4 @@ from pycarol import Carolina
 
 context.add_module('carolina', Carolina)
 
-print(context.staging)
+print(context._all_modules)

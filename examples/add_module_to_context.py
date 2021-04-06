@@ -1,12 +1,10 @@
-from pytechfin.context import CarolContext
+from pytechfin.context import Context
+from pycarol import CarolHandler
 
-context = CarolContext(use_production_context=True, carol_tenant='tenantf6ea21aa445511eb950a0a58646001ad')
+context = Context(use_production_context=True, carol_tenant='tenantf6ea21aa445511eb950a0a58646001ad')
 
+print(context.carol.staging)
 
-print(context.staging)
+context.carol.add_module('carolandler', CarolHandler)
 
-from pycarol import Carolina
-
-context.add_module('carolina', Carolina)
-
-print(context._all_modules)
+print(context.carol._all_modules)

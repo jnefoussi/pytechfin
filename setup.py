@@ -9,11 +9,11 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 
 min_requires = [
-    "pycarol" 
+    "pycarol[dataframe]" 
 ]
 
 extras_require = {
-    "dataframe": min_requires + ['pandas>=0.23.4,!=1.0.4', 'numpy>=1.16.3', 'joblib>=0.11', 'pyarrow>=0.15.1,<1.0.0',],
+    # "dataframe": min_requires + ['pandas>=0.23.4,!=1.0.4', 'numpy>=1.16.3', 'joblib>=0.11', 'pyarrow>=0.15.1,<1.0.0',],
     "dev": min_requires + ['pytest', 'bumpversion', "sphinx-rtd-theme", "sphinx"],
 }
 extras_require["complete"] = sorted(

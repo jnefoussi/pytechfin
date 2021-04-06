@@ -193,7 +193,3 @@ class Techfin:
 
             else:
                 TechfinApiResponseException(response.text, response.status_code)
-
-        
-
-

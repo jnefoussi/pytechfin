@@ -4,8 +4,7 @@ from pytechfin.enums import EnumApps
 tf = Techfin()
 dm = TechfinDataModel(tf)
 
-
-r = dm.get_pks(dm_name='apinvoiceaccounting', carol_tenant='tenant0e9b44667b6211eb9ba10a58646140cf',
+r = dm.get_pks(dm_name='arinvoice', carol_tenant='tenant70827589d8a611eabbf10a586460272f',
                page_size=5000, techfin_app=EnumApps.CASHFLOW.value)
 
 print(r)

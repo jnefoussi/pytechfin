@@ -14,7 +14,7 @@ def get_guid(tenant):
     return uuid_tenant
 
 
-def get_tenant_id(carol_tenant, techfin_tenant):
+def get_tenant_techfin(carol_tenant, techfin_tenant):
     """Returns techfin tenant id.
 
     Args:

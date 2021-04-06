@@ -1,4 +1,4 @@
-from .misc import get_tenant_id
+from .misc import get_tenant_techfin
 from .enums import EnumApps
 
 
@@ -25,7 +25,7 @@ class TechfinDataModel:
         if not EnumApps.exists_value(techfin_app):
             raise ValueError(f'techfin_app invalid. Value used" {techfin_app}. Check pytechfin.enums.EnumApps')
 
-        techfin_tenant_id = get_tenant_id(
+        techfin_tenant_id = get_tenant_techfin(
             techfin_tenant=techfin_tenant, carol_tenant=carol_tenant)
 
         total_data = []
@@ -69,7 +69,7 @@ class TechfinDataModel:
         if not EnumApps.exists_value(techfin_app):
             raise ValueError(f'techfin_app invalid. Value used" {techfin_app}. Check pytechfin.enums.EnumApps')
 
-        techfin_tenant_id = get_tenant_id(
+        techfin_tenant_id = get_tenant_techfin(
             techfin_tenant=techfin_tenant, carol_tenant=carol_tenant)
 
         r = self.techfin.call_api(path=f'provisioner/api/v1/carol-sync-monitoring/{techfin_tenant_id}/table-record-count',

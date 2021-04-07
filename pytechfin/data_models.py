@@ -19,8 +19,11 @@ class TechfinDataModel:
             page (int, optional): initial page to start to fetch the records.. Defaults to 1.
 
         Returns:
-            lsit: List of PKs
+            list: List of PKs
         """
+
+        if (techfin_tenant is None and carol_tenant is None):
+            techfin_tenant = self.techfin.techfin_tenant
 
         if not EnumApps.exists_value(techfin_app):
             raise ValueError(f'techfin_app invalid. Value used" {techfin_app}. Check pytechfin.enums.EnumApps')

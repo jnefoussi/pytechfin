@@ -86,5 +86,5 @@ class CarolTechfin:
 
         result = self.carol.query(only_hits=True, page_size=1000, print_status=True).query(filter).go().results
         realTime = pandas.DataFrame(result)
-        print(datamodel_name + ' ' + str(realTime.shape))
+        # print(datamodel_name + ' ' + str(realTime.shape))
         return realTime

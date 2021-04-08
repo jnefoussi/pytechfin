@@ -1,3 +1,4 @@
+from typing import DefaultDict
 import pandas
 
 class CarolTechfin:
@@ -88,3 +89,26 @@ class CarolTechfin:
         realTime = pandas.DataFrame(result)
         # print(datamodel_name + ' ' + str(realTime.shape))
         return realTime
+
+    def get_datamodel_relationship_constraints(self, dm_list=None):
+        """
+        Create relationship between data models based on their  relationship constraints
+        Args:
+            carol: `pycarol.Carol`
+                CarolAPI() object.
+            prefix: 'str` default `DM_`
+                prefix to add to the data model name. e.g., if dm_name='mydatamoldel', the result will be "DM_mydatamoldel`
+        Returns: `defaultdict(set)`
+            dictionary { "dm1" : {"dm2": "field_dm_1" : "field_dm_2"}}
+        """
+        # find Relationship Constraints
+        if dm_list is None:
+            dms = self.carol.datamodel.get_all().template_dict.keys()
+        else:
+            dms = dm_list
+        relationship_constraints = DefaultDict(list)
+        for i in dms:
+            snap = self.carol.datamodel.get_by_name(i)['mdmRelationshipConstraints']
+            if snap:
+                relationship_constraints[i].append({i["mdmTargetEntityName"]:i["mdmSourceTargetFieldName"] for i in snap})
+        return relationship_constraints

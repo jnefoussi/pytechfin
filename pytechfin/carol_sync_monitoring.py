@@ -2,7 +2,7 @@ from .misc import get_tenant_techfin
 from .enums import EnumApps
 
 
-class TechfinDataModel:
+class CarolSyncMonitoring: 
 
     def __init__(self, techfin):
         self.techfin = techfin

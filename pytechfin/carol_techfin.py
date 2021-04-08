@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 from typing import DefaultDict
+=======
+>>>>>>> 444cf0c13565feacc36b01168d61134cf1274ab0
 import pandas
 
 class CarolTechfin:

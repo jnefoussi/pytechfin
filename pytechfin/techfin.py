@@ -1,65 +1,26 @@
 import json
 import os
-import copy
 import os.path
 from . import __version__
 from .exceptions import TechfinApiResponseException, InvalidToken
 from .http import _retry_session
 from .auth import TOTVSRacAuth
+from .data_models import TechfinDataModel
 
 class Techfin:
-    """
-    This class handle all Techfin`s API calls It will handle all API calls,
-    for a given authentication method. :param domain: `str`.
+    """This class handle all Techfin's API calls It will handle all API calls,
+    based on your TOTVS RAC Credentials. 
+    (Obs. some functions need access level based on user roles)
 
     Args:
+        auth (TOTVSRacAuth, optional): TOTVS RAC Credentials. Defaults to None 
 
-        domain: `str`. default `None`.
-            Tenant name. e.x., domain.carol.ai
-        app_name: `str`. default `None`.
-            Carol app name.
-        auth: `PwdAuth` or `ApiKeyAuth`.
-            object Auth Carol object to handle authentication
-        connector_id: `str` , default `__CONNECTOR_PYCAROL__`.
-            Connector Id
-        port: `int` , default 443.
-            Port to be used (when running locally it could change)
-        verbose: `bool` , default `False`.
-            If True will print the header, method and URL of each API call.
-        organization: `str` , default `None`.
-            Organization domain.
-        environment: `str`, default `carol.ai`,
-            Which Carol's environment to use. There are three possible values today.
-
-                1. 'carol.ai' for the production environment
-                2. 'karol.ai' for the explore environment
-                3. 'qarol.ai' for the QA environment
-
-        host: `str` default `None`
-            This will overwrite the host used. Today the host is:
-
-                1. if organization is None, host={domain}.{environment}
-                2. else host={organization}.{environment}
-
-            See Carol._set_host.
-
-    OBS:
-        In case all parameters are `None`, pycarol will try yo find their values in the environment variables.
-        The values are:
-
-             1. `CAROLTENANT` for domain
-             2. `CAROLAPPNAME` for app_name
-             3. `CAROLAPPOAUTH` for auth
-             4. `CAROLORGANIZATION` for organization
-             5. `CAROLCONNECTORID` for connector_id
-             6. `CAROL_DOMAIN` for environment
-             7. `CAROLUSER` for carol user email
-             8. `CAROLPWD` for user password.
-
-
+        port (int, optional): API URL port. Defaults to 443. 
+        
+        host (string, optional): API host address. Defaults to None or totvs.app (production).
     """
-
-    def __init__(self, auth=None, port=443, host=None):
+ 
+    def __init__(self, auth=None, port=443, host=None, techfin_tenant=None):
 
         if auth is None:
             client_id = os.getenv('TECHFINCLIENTID')
@@ -71,6 +32,9 @@ class Techfin:
         self.host = host or 'totvs.app'
         self.auth = auth
         self.auth.login(self)
+
+        self.techfin_tenant = techfin_tenant
+        self.datamodel = TechfinDataModel(self)
 
 
     def call_api(self, path, techfin_app, method=None, data=None, auth=True, params=None, content_type='application/json', retries=8,

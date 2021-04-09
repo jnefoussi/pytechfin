@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-from typing import DefaultDict
-=======
->>>>>>> 444cf0c13565feacc36b01168d61134cf1274ab0
+from collections import defaultdict
 import pandas
 
 class CarolTechfin:
@@ -109,7 +106,7 @@ class CarolTechfin:
             dms = self.carol.datamodel.get_all().template_dict.keys()
         else:
             dms = dm_list
-        relationship_constraints = DefaultDict(list)
+        relationship_constraints = defaultdict(list)
         for i in dms:
             snap = self.carol.datamodel.get_by_name(i)['mdmRelationshipConstraints']
             if snap:

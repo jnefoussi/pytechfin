@@ -5,11 +5,7 @@ from . import __version__
 from .exceptions import TechfinApiResponseException, InvalidToken
 from .http import _retry_session
 from .auth import TOTVSRacAuth
-<<<<<<< HEAD
 from .carol_sync_monitoring import CarolSyncMonitoring
-=======
-from .data_models import TechfinDataModel
->>>>>>> 444cf0c13565feacc36b01168d61134cf1274ab0
 
 class Techfin:
     """This class handle all Techfin's API calls It will handle all API calls,

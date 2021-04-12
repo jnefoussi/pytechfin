@@ -1,4 +1,4 @@
-import pandas
+import pandas as pd
 
 class CarolTechfin:
     """ Module to handle Carol's data.
@@ -85,6 +85,6 @@ class CarolTechfin:
         }
 
         result = self.carol.query(only_hits=True, page_size=1000, print_status=True).query(filter).go().results
-        realTime = pandas.DataFrame(result)
+        realTime = pd.DataFrame(result)
         # print(datamodel_name + ' ' + str(realTime.shape))
         return realTime

@@ -1,5 +1,4 @@
-from collections import defaultdict
-import pandas
+import pandas as pd
 
 class CarolTechfin:
     """ Module to handle Carol's data.
@@ -90,7 +89,7 @@ class CarolTechfin:
         }
 
         result = self.carol.query(only_hits=True, page_size=1000, print_status=True).query(filter).go().results
-        realtime = pandas.DataFrame(result)
+        realtime = pd.DataFrame(result)
         # print(datamodel_name + ' ' + str(realTime.shape))
         return realtime
 

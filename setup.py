@@ -9,7 +9,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 
 min_requires = [
-    "pycarol[dataframe]" 
+    "pycarol[dataframe]>=2.45.0" 
 ]
 
 extras_require = {

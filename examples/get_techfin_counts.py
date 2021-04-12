@@ -1,11 +1,11 @@
-from pytechfin import Techfin, TOTVSRacAuth, TechfinDataModel
+from pytechfin import Techfin, TOTVSRacAuth, CarolSyncMonitoring
 from pytechfin.enums import EnumApps
 
 
 tf = Techfin()
-dm = TechfinDataModel(tf)
+csm = CarolSyncMonitoring(tf)
 
 
-r = dm.get_table_record_count(carol_tenant='tenant70827589d8a611eabbf10a586460272f', techfin_app=EnumApps.CASHFLOW.value)
+r = csm.get_table_record_count(carol_tenant='tenant70827589d8a611eabbf10a586460272f', techfin_app=EnumApps.CASHFLOW.value)
 
 print(r)

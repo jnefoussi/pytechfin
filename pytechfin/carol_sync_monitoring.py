@@ -18,6 +18,8 @@ class CarolSyncMonitoring:
             carol_tenant (str, optional): carol tenant name. Defaults to Nonte.
             page_size (int, optional): number of records to get in each interation. Defaults to 1000.
             page (int, optional): initial page to start to fetch the records.. Defaults to 1.
+            debug (bool, optional): show debug logs.
+            max_hits (int): Number of records to return.
 
         Returns:
             list: List of PKs
@@ -91,13 +93,16 @@ class CarolSyncMonitoring:
         Args:
             dm_name (str): Data model name
             techfin_app (str): techfin app name.
+            pk_list (list): list of keys to get.
             techfin_tenant (str, optional): techfin tenant id. Defaults to None.
             carol_tenant (str, optional): carol tenant name. Defaults to Nonte.
             page_size (int, optional): number of records to get in each interation. Defaults to 1000.
             page (int, optional): initial page to start to fetch the records.. Defaults to 1.
+            debug (bool, optional): show debug logs.
+            return_dataframe (bool, optional): Return a pandas DataFrame
 
         Returns:
-            list: List of PKs
+            (list of dict, pd.DataFrame):
         """
 
         if (techfin_tenant is None and carol_tenant is None):

@@ -9,7 +9,8 @@ class CarolTechfin:
         self.carol = carol
 
 
-    def get_staging_data(self, staging_name, connector_name='protheus_carol', merge_records=True, columns=None, callback=None, max_workers=30):
+    def get_staging_data(self, staging_name, 
+            connector_name='protheus_carol', merge_records=True, columns=None, callback=None, max_workers=30):
         """ Get records from a staging table.
 
         Args:
@@ -52,14 +53,16 @@ class CarolTechfin:
         # file_pattern = '2021-02'
         file_pattern = None
 
-        df = self.carol.staging.fetch_parquet(staging_name=staging, 
-                                connector_name=connector_name, 
-                                max_workers=max_workers, 
-                                columns=col, 
-                                merge_records=merge_records, 
-                                return_metadata=return_metadata, 
-                                max_hits=max_hits,
-                                callback=callback, file_pattern=file_pattern)
+        df = self.carol.staging.fetch_parquet(
+                staging_name=staging, 
+                connector_name=connector_name, 
+                max_workers=max_workers, 
+                columns=col, 
+                merge_records=merge_records, 
+                return_metadata=return_metadata, 
+                max_hits=max_hits,
+                callback=callback, file_pattern=file_pattern)
+
         return df
 
     def get_realtime_data(self, datamodel_name):
@@ -85,6 +88,30 @@ class CarolTechfin:
         }
 
         result = self.carol.query(only_hits=True, page_size=1000, print_status=True).query(filter).go().results
-        realTime = pd.DataFrame(result)
+        realtime = pd.DataFrame(result)
         # print(datamodel_name + ' ' + str(realTime.shape))
-        return realTime
+        return realtime
+
+    def get_datamodel_relationship_constraints(self, dm_list=None):
+        """
+        Create relationship between data models based on their  relationship constraints
+        Args:
+            carol: `pycarol.Carol`
+                CarolAPI() object.
+            prefix: 'str` default `DM_`
+                prefix to add to the data model name. e.g., 
+                if dm_name='mydatamoldel', the result will be "DM_mydatamoldel`
+        Returns: `defaultdict(set)`
+            dictionary { "dm1" : {"dm2": "field_dm_1" : "field_dm_2"}}
+        """
+        # find Relationship Constraints
+        if dm_list is None:
+            dms = self.carol.datamodel.get_all().template_dict.keys()
+        else:
+            dms = dm_list
+        relationship_constraints = defaultdict(list)
+        for i in dms:
+            snap = self.carol.datamodel.get_by_name(i)['mdmRelationshipConstraints']
+            if snap:
+                relationship_constraints[i].append({i["mdmTargetEntityName"]:i["mdmSourceTargetFieldName"] for i in snap})
+        return relationship_constraints

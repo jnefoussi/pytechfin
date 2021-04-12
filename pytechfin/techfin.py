@@ -5,7 +5,7 @@ from . import __version__
 from .exceptions import TechfinApiResponseException, InvalidToken
 from .http import _retry_session
 from .auth import TOTVSRacAuth
-from .data_models import TechfinDataModel
+from .carol_sync_monitoring import CarolSyncMonitoring
 
 class Techfin:
     """This class handle all Techfin's API calls It will handle all API calls,
@@ -34,7 +34,7 @@ class Techfin:
         self.auth.login(self)
 
         self.techfin_tenant = techfin_tenant
-        self.datamodel = TechfinDataModel(self)
+        self.carol_sync_monitoring = CarolSyncMonitoring(self)
 
 
     def call_api(self, path, techfin_app, method=None, data=None, auth=True, params=None, content_type='application/json', retries=8,

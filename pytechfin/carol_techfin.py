@@ -66,6 +66,7 @@ class CarolTechfin:
 
         return df
 
+
     def get_realtime_data(self, datamodel_name):
         filter = {
             "mustList": [
@@ -92,6 +93,7 @@ class CarolTechfin:
         realtime = pandas.DataFrame(result)
         # print(datamodel_name + ' ' + str(realTime.shape))
         return realtime
+
 
     def get_datamodel_relationship_constraints(self, dm_list=None):
         """

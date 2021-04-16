@@ -1,6 +1,7 @@
 import json
 import os
 import os.path
+from pytechfin.provisioning import Provisioning
 from . import __version__
 from .exceptions import TechfinApiResponseException, InvalidToken
 from .http import _retry_session
@@ -35,6 +36,7 @@ class Techfin:
 
         self.techfin_tenant = techfin_tenant
         self.carol_sync_monitoring = CarolSyncMonitoring(self)
+        self.provisioning = Provisioning(self)
 
 
     def call_api(self, path, techfin_app, method=None, data=None, auth=True, params=None, content_type='application/json', retries=8,

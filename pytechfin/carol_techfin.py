@@ -117,3 +117,22 @@ class CarolTechfin:
             if snap:
                 relationship_constraints[i].append({i["mdmTargetEntityName"]:i["mdmSourceTargetFieldName"] for i in snap})
         return relationship_constraints
+
+    def process_staging(self, stagings_list):
+        """ Process a list of staging tables
+
+        Args:
+            stagings_list `list str`: List of stagings name
+        """
+
+        for staging_name in stagings_list:
+            print(f'adding process staging task to staging: {staging_name} ')
+            self.carol.cds_staging.process_data(staging_name, connector_name='protheus_carol', recursive_processing=False)
+        print(f'see more in https://{self.carol.organization}.{self.carol.environment}/{self.carol.domain}/carol-ui/tasks')
+
+
+    # TODO: Add custom pipeline function from 
+    # https://github.com/rafarui/techfin-reprocess/blob/master/functions/custom_pipeline.py
+
+    # TODO: Add track_tasks function from
+    # https://github.com/rafarui/techfin-reprocess/blob/master/functions/carol_task.py

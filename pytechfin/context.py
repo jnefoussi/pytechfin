@@ -26,7 +26,9 @@ class Context():
         
         if carol_tenant is None:
             self._carol_tenant = get_tenant_name(techfin_tenant)
+            self._techfin_tenant = techfin_tenant
         else:
+            self._carol_tenant = carol_tenant
             self._techfin_tenant = get_tenant_techfin(carol_tenant, techfin_tenant)
     
         if use_production_context:

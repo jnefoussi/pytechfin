@@ -72,6 +72,7 @@ class CarolTechfin:
 
         return df
 
+
     def get_realtime_data(self, datamodel_name):
         """ Get records from a realtime datamodel
 

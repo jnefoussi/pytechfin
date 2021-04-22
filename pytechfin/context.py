@@ -35,7 +35,7 @@ class Context():
             organization = 'totvstechfin'
             app_name = 'techfinplataform'
 
-        self._carol = CarolAPI(carol_tenant, app_name, auth=auth, user=user, password=password,
+        self._carol = CarolAPI(self._carol_tenant, app_name, auth=auth, user=user, password=password,
                     environment=environment, organization=organization, connector_id=connector_id)
         
         self._techfin = Techfin(auth=techfin_auth, port=techfin_port, host=techfin_host, techfin_tenant=self.techfin_tenant)

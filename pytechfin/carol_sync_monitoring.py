@@ -64,6 +64,7 @@ class CarolSyncMonitoring:
 
         return total_data
 
+
     def get_table_record_count(self, techfin_app, techfin_tenant=None, carol_tenant=None):
         """Get number of records per table in techfin
 
@@ -86,6 +87,7 @@ class CarolSyncMonitoring:
         r = self.techfin.call_api(path=f'provisioner/api/v1/carol-sync-monitoring/{techfin_tenant_id}/table-record-count',
                                   method='GET', techfin_app=techfin_app)
         return r
+
 
     def get_data_by_pk(self, dm_name, techfin_app, pk_list, techfin_tenant=None, carol_tenant=None, page_size=1000, page=1, debug=False, return_dataframe=True):
         """Get PKs from a data model

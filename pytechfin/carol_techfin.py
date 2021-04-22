@@ -1,4 +1,11 @@
+from collections import defaultdict
 import pandas as pd
+
+# TODO: Add custom pipeline function from 
+# https://github.com/rafarui/techfin-reprocess/blob/master/functions/custom_pipeline.py
+
+# TODO: Add track_tasks function from
+# https://github.com/rafarui/techfin-reprocess/blob/master/functions/carol_task.py
 
 class CarolTechfin:
     """ Module to handle Carol's data.
@@ -65,8 +72,17 @@ class CarolTechfin:
 
         return df
 
-
     def get_realtime_data(self, datamodel_name):
+        """ Get records from a realtime datamodel
+
+        Args:
+            datamodel_name: ``str`
+                Carol datamodel name
+
+        Returns: `pandas.DataFrame`
+            DataFrame with the realtime data.
+        """
+
         filter = {
             "mustList": [
                 {
@@ -90,9 +106,37 @@ class CarolTechfin:
 
         result = self.carol.query(only_hits=True, page_size=1000, print_status=True).query(filter).go().results
         realtime = pd.DataFrame(result)
-        # print(datamodel_name + ' ' + str(realTime.shape))
+
         return realtime
 
+    def get_cds_data(self, datamodel_name, merge_records=True, columns = None, return_metadata = False, callback=None,  max_workers=30):
+        """[summary]
+
+        Args:
+            datamodel_name: `str` optional
+                Carol datamodel name
+            merge_records: `bool` optional
+                Merge cds data. Defaults to True.
+            columns: `list of string`  optional
+                Datamodel's columns. Defaults to None (return all columns).
+            return_metadata: `bool`  optional 
+                Return Carol metadata columns. Defaults to False.
+            callback: `function` optional
+                Callback function to handle data. Defaults to None.
+            max_workers: `int` optional
+                Number of worker used to process. Defaults to 30.
+
+        Returns: `pandas.DataFrame`
+            DataFrame with the staging data.
+        """
+
+        df = self.carol.datamodel.fetch_parquet(
+            dm_name=datamodel_name, max_workers=max_workers,
+            backend='pandas', return_dask_graph=False, columns=columns, merge_records=merge_records, 
+            return_metadata=return_metadata, max_hits=None, callback=callback , cds=True,
+            file_pattern=None)
+
+        return df
 
     def get_datamodel_relationship_constraints(self, dm_list=None):
         """
@@ -106,6 +150,7 @@ class CarolTechfin:
         Returns: `defaultdict(set)`
             dictionary { "dm1" : {"dm2": "field_dm_1" : "field_dm_2"}}
         """
+        
         # find Relationship Constraints
         if dm_list is None:
             dms = self.carol.datamodel.get_all().template_dict.keys()
@@ -130,9 +175,14 @@ class CarolTechfin:
             self.carol.cds_staging.process_data(staging_name, connector_name='protheus_carol', recursive_processing=False)
         print(f'see more in https://{self.carol.organization}.{self.carol.environment}/{self.carol.domain}/carol-ui/tasks')
 
+    
+    def get_carol_record_count(self):
+        """ Get carol record count from tenant explore stats
 
-    # TODO: Add custom pipeline function from 
-    # https://github.com/rafarui/techfin-reprocess/blob/master/functions/custom_pipeline.py
+        Returns:
+            `dict`
+                Dict with datamodels stats
+        """
+        response = self.carol.call_api(path=f'v1/dashboard/exploreStatistics?days=3', method='GET')
 
-    # TODO: Add track_tasks function from
-    # https://github.com/rafarui/techfin-reprocess/blob/master/functions/carol_task.py
+        return response["exploreStats"]

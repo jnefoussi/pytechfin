@@ -9,13 +9,13 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 
 min_requires = [
-    "pycarol[dataframe]>=2.45.0" 
+    "pycarol>=2.45.0" ,
+    "pandas"
 ]
 
 extras_require = {
-    # "dataframe": min_requires + ['pandas>=0.23.4,!=1.0.4', 'numpy>=1.16.3', 'joblib>=0.11', 'pyarrow>=0.15.1,<1.0.0',],
-    "dev": min_requires + ['pytest', 'bumpversion', "sphinx-rtd-theme", "sphinx"],
 }
+
 extras_require["complete"] = sorted(
     {v for req in extras_require.values() for v in req}
 )
@@ -50,18 +50,18 @@ def find_version(*file_paths):
 
 setup(
     name='pytechfin',
-    setup_requires=["wheel"],
+    setup_requires=["wheel","pandas"],
     packages=find_packages(exclude=['docs', 'doc']),
     version=find_version("pytechfin", "__init__.py"),
-    license='TOTVS SA',
+    license='MIT',
     description='Techfin Python API and Tools',
     long_description=long_description,
     long_description_content_type="text/x-rst",
-    author='TOTVS SA',
-    maintainer='TOTVS SA',
-    author_email='ops@totvslabs.com',
+    author='Jonathan J Nefoussi',
+    maintainer='Jonathan J Nefoussi',
+    author_email='jnefoussi@gmail.com',
     url='https://github.com/jnefoussi/pytechfin',
-    keywords=['Totvs', 'Carol.ai', 'totvs techfin'],
+    keywords=['TOTVS Techfin', 'Carol.ai', 'TOTVS'],
     install_requires=min_requires,
     extras_require=extras_require,
     classifiers=[

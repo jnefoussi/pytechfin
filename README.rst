@@ -1,12 +1,13 @@
-.. image:: ./logos/pytechfin_logo.png
+.. image:: https://raw.githubusercontent.com/jnefoussi/pytechfin/main/logos/pytechfin_logo.png
 
-
-=======
+============
 pytechfin
-=======
+============
 
-
-
+Getting Started
+---------------
+Run ``pip install pytechfin`` to install the latest stable version from `PyPI
+<https://pypi.python.org/pypi/pytechfin>`_
 
 Initializing 
 ------------
